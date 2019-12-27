@@ -78,9 +78,11 @@ The backend service can be found [here](https://github.com/Emergency-Response-De
         
         3. Pipeline Resources - First is git resource where we give git url of repository and second is image resource where the image will be pushed.
         
-            Here we are using OpenShift Internal Registry but you can also use any external registry like DockerHub, Quay. 
+            Here, we are using OpenShift Internal Registry but you can also use any external registry like DockerHub or Quay.
+             
+            To access your external registry from OpenShift, Create a secret with your registry credentials and link the secret to the `pipeline` service account with `mount` access and `default` for `pull` access. 
             
-            Before Installing Resources, Replace your git url of findmyrelative-frontend in `01-findmyrelative-ui-git-resource.yaml`
+            Before installing resources, Replace your git url of findmyrelative-frontend in `01-findmyrelative-ui-git-resource.yaml`
             
             Now, you can install using below command - 
             
@@ -100,7 +102,7 @@ The backend service can be found [here](https://github.com/Emergency-Response-De
         oc apply -f 04-pipelineruns/01-findmyrelative-ui-pipelinerun.yaml
        ```
               
-    7. Next Step is to create a trigger so that on any code change in GitHub the pipeline will start and deploy the new code. 
+    7. Next Step is to create a trigger so that on any code change in GitHub, the pipeline will start and deploy the new code. 
          
         Install Event Listener, Trigger Template and Trigger binding.
         
@@ -108,7 +110,7 @@ The backend service can be found [here](https://github.com/Emergency-Response-De
         oc apply -f 05-pipeline-triggers/
         ```
         
-        New pod will be created for Event listener. Get the url for Event Listener which we will need for creating Webhook - ` oc get route`.
+        New pod will be created for Event listener. Get the url for Event Listener which we will need for creating webhook - ` oc get route `.
     
     8. Create a webhook  -
     
@@ -126,11 +128,11 @@ The backend service can be found [here](https://github.com/Emergency-Response-De
         
         Now, install the task and the task run.
         
-        ```
+       ```
          oc apply -f 06-github-webhooks/
        ```
         
         If you go to Github, you can see a webhook created for the repository.   
         
-    9. Now, when you change code and push it to repository. You can see a new pipelinerun is started.              
+    9. Now, when you change the code and push it to repository. You can see a new pipelinerun is started.              
         
