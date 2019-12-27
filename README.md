@@ -16,13 +16,15 @@ The backend service can be found [here](https://github.com/Emergency-Response-De
 
 * You can deploy using Dockerfile on OpenShift Webconsole or run the following command.
   
-  `oc new-app --name frontend --strategy docker https://github.com/Emergency-Response-Demo/find-service`
+  ```
+  oc new-app --name frontend --strategy docker https://github.com/Emergency-Response-Demo/find-service
+  ```
   
-* You need to create a config map to pass the backend url as `REACT_APP_BACKEND_URL` and Mapbox access token as `REACT_APP_MAPBOX_TOKEN`.  You can get a Mapbox token [here](https://account.mapbox.com/). 
+* You need to pass the backend url as `REACT_APP_BACKEND_URL` and Mapbox access token as `REACT_APP_MAPBOX_TOKEN` as Environment variables. You can get a Mapbox token [here](https://account.mapbox.com/). 
 
 ## Deploying using Tekton Pipeline
 
-* Prerequisite
+* Prerequisites
 
     - OpenShift v4.x Cluster.
      
@@ -43,7 +45,7 @@ The backend service can be found [here](https://github.com/Emergency-Response-De
     3. Traverse to the pipeline folder.
     
         ```
-       cd findmyrelative-frontend/pipeline/
+        cd findmyrelative-frontend/pipeline/
         ```
         
     4. Login to your OpenShift Cluster.
@@ -51,7 +53,7 @@ The backend service can be found [here](https://github.com/Emergency-Response-De
     5. Create a new project `find-my-relative`
     
        ```
-        oc new-project find-my-relative
+       oc new-project find-my-relative
        ```
     
     6. Install the Pipeline Resources,Task and Pipeline.
@@ -61,7 +63,7 @@ The backend service can be found [here](https://github.com/Emergency-Response-De
             Install pipeline using below command - 
         
            ```
-             oc apply -f 03-pipelines/01-findmyrelative-ui-pipeline.yaml 
+           oc apply -f 03-pipelines/01-findmyrelative-ui-pipeline.yaml 
            ```
          
         2. Tasks - There are two task in the Pipeline - 
@@ -87,20 +89,20 @@ The backend service can be found [here](https://github.com/Emergency-Response-De
             Now, you can install using below command - 
             
            ```
-            oc apply -f 01-pipelineresources/
+           oc apply -f 01-pipelineresources/
            ```
         
         Now, we are ready to run the pipeline. You can run it by using below command or Go to OpenShift Web Console -> find-my-relative Project -> Pipeline Tab -> Pipeline -> Click on pipeline and Start.
         
         ```
-         tkn pipeline start findmyrelative-ui-pipeline -r source-git-repo=findmyrelative-ui-git-repo -r image-resource-name=findmyrelative-ui-image -s pipeline
-       ```  
+        tkn pipeline start findmyrelative-ui-pipeline -r source-git-repo=findmyrelative-ui-git-repo -r image-resource-name=findmyrelative-ui-image -s pipeline
+        ```  
         
         Also, You can start pipeline using pipeline run.      
         
         ``` 
         oc apply -f 04-pipelineruns/01-findmyrelative-ui-pipelinerun.yaml
-       ```
+        ```
               
     7. Next Step is to create a trigger so that on any code change in GitHub, the pipeline will start and deploy the new code. 
          
@@ -129,7 +131,7 @@ The backend service can be found [here](https://github.com/Emergency-Response-De
         Now, install the task and the task run.
         
        ```
-         oc apply -f 06-github-webhooks/
+       oc apply -f 06-github-webhooks/
        ```
         
         If you go to Github, you can see a webhook created for the repository.   
