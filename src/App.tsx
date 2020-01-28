@@ -15,7 +15,7 @@ const logoProps = {
 
 const Header = (
   <PageHeader
-    logo="Find My Relative App"
+    logo="Find My Relative Application"
     logoProps={logoProps}
     toolbar="Toolbar"
     avatar=" | Avatar"
