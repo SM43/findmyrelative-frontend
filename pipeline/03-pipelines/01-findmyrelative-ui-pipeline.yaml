@@ -25,15 +25,13 @@ spec:
       value: "false"
   - name: create-upate-deployment
     taskRef:
-      name: oc-apply-deployment
-    resources:
-      inputs:
-      - name: k8s-repo
-        resource: source-git-repo
-      - name: new-image
-        resource: image-resource-name
-    params:
-    - name: deployment-name
-      value: frontend
+      name: openshift-client
+      kind: ClusterTask
     runAfter:
-    - build-image
+      - build-image
+    params:
+      - name: ARGS
+        value:
+          - apply
+          - -f
+          - https://raw.githubusercontent.com/SM43/findmyrelative-frontend/master/k8s/deployment.yaml
